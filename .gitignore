@@ -1,0 +1,32 @@
+# Unwanted files in general
+*.tmp
+*.bak
+*.swp
+
+# Eclipse files
+.metadata/
+local.properties
+.loadpath
+*~
+
+# Generated class files
+bin/
+gen/
+*.class
+
+# OSX
+.DS_Store
+
+# Log files
+*.log
+
+# External libraries
+maltparser-1.8.1/
+mallet/
+
+# Project-specific files
+raw/
+parsed/
+topic/
+jar/
+!jar/jars_to_copy
