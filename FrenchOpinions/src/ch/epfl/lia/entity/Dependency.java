@@ -14,6 +14,11 @@ public class Dependency implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private static final Pattern PATTERN = Pattern.compile("^(.+)\\((.+)-(\\d+)'*,(.+)-(\\d+)'*\\)$");
+    private static final int RELN_GRP = 1;
+    private static final int GOV_GRP = 2;
+    private static final int GOVID_GRP = 3;
+    private static final int DEP_GRP = 4;
+    private static final int DEPID_GRP = 5;
 
     private final String reln;
     private final String gov;
@@ -26,16 +31,18 @@ public class Dependency implements Serializable {
         
         Matcher matcher = PATTERN.matcher(raw);
         matcher.matches();
-        reln = matcher.group(1);
-        gov = matcher.group(2);
-        govId = Integer.parseInt(matcher.group(3));
-        dep = matcher.group(4);
-        depId = Integer.parseInt(matcher.group(5));
+        reln = matcher.group(RELN_GRP);
+        gov = matcher.group(GOV_GRP);
+        govId = Integer.parseInt(matcher.group(GOVID_GRP));
+        dep = matcher.group(DEP_GRP);
+        depId = Integer.parseInt(matcher.group(DEPID_GRP));
     }
 
     public Dependency(String reln, String gov, int govId, String dep, int depId) {
         Preconditions.throwIfEmptyString("dependency members may not be empty", reln, gov, dep);
-        if (govId < 0 || depId < 0) throw new IllegalArgumentException("govId and depId must be positive");
+        if (govId < 0 || depId < 0) {
+            throw new IllegalArgumentException("govId and depId must be positive");
+        }
         
         this.reln = reln;
         this.gov = gov;
@@ -46,32 +53,43 @@ public class Dependency implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Dependency other = (Dependency) obj;
         if (dep == null) {
-            if (other.dep != null)
+            if (other.dep != null) {
                 return false;
-        } else if (!dep.equals(other.dep))
+            }
+        } else if (!dep.equals(other.dep)) {
             return false;
-        if (depId != other.depId)
+        }
+        if (depId != other.depId) {
             return false;
+        }
         if (gov == null) {
-            if (other.gov != null)
+            if (other.gov != null) {
                 return false;
-        } else if (!gov.equals(other.gov))
+            }
+        } else if (!gov.equals(other.gov)) {
             return false;
-        if (govId != other.govId)
+        }
+        if (govId != other.govId) {
             return false;
+        }
         if (reln == null) {
-            if (other.reln != null)
+            if (other.reln != null) {
                 return false;
-        } else if (!reln.equals(other.reln))
+            }
+        } else if (!reln.equals(other.reln)) {
             return false;
+        }
         return true;
     }
 

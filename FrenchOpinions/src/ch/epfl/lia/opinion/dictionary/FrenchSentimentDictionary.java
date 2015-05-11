@@ -57,7 +57,7 @@ public final class FrenchSentimentDictionary implements SentimentDictionary {
     /**
      * @return the unique instance of the dictionary
      */
-    public static final FrenchSentimentDictionary getInstance() {
+    public static FrenchSentimentDictionary getInstance() {
         if (instance == null) {
             try {
                 instance = new FrenchSentimentDictionary(SENTIMENT_DIC_LOCATION_FR);

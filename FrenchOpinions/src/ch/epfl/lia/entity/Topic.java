@@ -13,15 +13,15 @@ public class Topic implements Entity {
     private static final long serialVersionUID = 1L;
     
     private final int lineId;
-    private final double polarity;
     private final List<String> keys;
     
     public Topic(int lineId, double polarity, List<String> keys) {
         Preconditions.throwIfNullOrEmpty("key list may not be null or empty", keys);
-        if (lineId < 0) throw new IllegalArgumentException("line id must be positive");
+        if (lineId < 0) {
+            throw new IllegalArgumentException("line id must be positive");
+        }
         
         this.lineId = lineId;
-        this.polarity = polarity;
         this.keys = new LinkedList<>(keys);
     }
     
@@ -33,16 +33,11 @@ public class Topic implements Entity {
      */
     public Topic(Topic topic) {
         this.lineId = topic.lineId;
-        this.polarity = topic.polarity;
         this.keys = new LinkedList<>(topic.keys);
     }
     
     public int lineId() {
         return lineId;
-    }
-    
-    public double polarity() {
-        return polarity;
     }
     
     public List<String> keys() {
@@ -76,32 +71,33 @@ public class Topic implements Entity {
         int result = 1;
         result = prime * result + ((keys == null) ? 0 : keys.hashCode());
         result = prime * result + lineId;
-        long temp;
-        temp = Double.doubleToLongBits(polarity);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Topic other = (Topic) obj;
         if (keys == null) {
-            if (other.keys != null)
+            if (other.keys != null) {
                 return false;
-        } else if (!keys.equals(other.keys))
+            }
+        } else if (!keys.equals(other.keys)) {
             return false;
-        if (lineId != other.lineId)
+        }
+        if (lineId != other.lineId) {
             return false;
-        if (Double.doubleToLongBits(polarity) != Double
-                .doubleToLongBits(other.polarity))
-            return false;
+        }
         return true;
     }
+
     
 }

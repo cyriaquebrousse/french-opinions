@@ -24,9 +24,14 @@ public class Chain {
     private final List<Integer> wordIds = new LinkedList<>();
     
     public Chain(Dependency... dependencies) {
-        if (dependencies == null || dependencies.length == 0) throw new NullPointerException("cannot create from null or empty array");
+        if (dependencies == null || dependencies.length == 0) {
+            throw new NullPointerException("cannot create from null or empty array");
+        }
+        
         List<Dependency> depList = Arrays.asList(dependencies);
-        if (!checkChainInvariants(depList)) throw new IllegalArgumentException("chain invariants do not hold");
+        if (!checkChainInvariants(depList)) {
+            throw new IllegalArgumentException("chain invariants do not hold");
+        }
 
         this.dependencies.addAll(depList);
         this.wordIds.addAll(wordIdListFromDependencies(depList));
@@ -34,7 +39,9 @@ public class Chain {
     
     public Chain(List<Dependency> dependencies) {
         Preconditions.throwIfNullOrEmpty("cannot create from null or empty list", dependencies);
-        if (!checkChainInvariants(dependencies)) throw new IllegalArgumentException("chain invariants do not hold");
+        if (!checkChainInvariants(dependencies)) {
+            throw new IllegalArgumentException("chain invariants do not hold");
+        }
         
         this.dependencies.addAll(dependencies);
         this.wordIds.addAll(wordIdListFromDependencies(dependencies));
@@ -118,23 +125,30 @@ public class Chain {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Chain other = (Chain) obj;
         if (dependencies == null) {
-            if (other.dependencies != null)
+            if (other.dependencies != null) {
                 return false;
-        } else if (!dependencies.equals(other.dependencies))
+            }
+        } else if (!dependencies.equals(other.dependencies)) {
             return false;
+        }
         if (wordIds == null) {
-            if (other.wordIds != null)
+            if (other.wordIds != null) {
                 return false;
-        } else if (!wordIds.equals(other.wordIds))
+            }
+        } else if (!wordIds.equals(other.wordIds)) {
             return false;
+        }
         return true;
     }
 

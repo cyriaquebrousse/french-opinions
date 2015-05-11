@@ -104,7 +104,9 @@ public final class TopicManager {
                 /* consume the line */
             }
             
-            if (p.waitFor() != 0) throw new IllegalStateException();
+            if (p.waitFor() != 0) {
+                throw new IllegalStateException();
+            }
 
         } catch (IOException | InterruptedException | IllegalStateException e) {
             throw new TopicExtractionException(e);

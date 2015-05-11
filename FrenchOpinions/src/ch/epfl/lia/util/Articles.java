@@ -43,7 +43,9 @@ public final class Articles {
      */
     public static Article constructArticleFromRaw(int articleId, Language language) throws IOException {
         Preconditions.throwIfNull("need a language", language);
-        if (articleId < 0) throw new IllegalArgumentException("article id must be positive");
+        if (articleId < 0) {
+            throw new IllegalArgumentException("article id must be positive");
+        }
         
         String title = "N/A";
         Timestamp creationDate = new Timestamp(System.currentTimeMillis());

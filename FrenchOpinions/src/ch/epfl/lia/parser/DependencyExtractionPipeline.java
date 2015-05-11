@@ -173,7 +173,9 @@ public final class DependencyExtractionPipeline {
         Pattern pattern = Pattern.compile("^(\\d+)\t(\\S+)\t_\t(\\S+)\t(\\S+)\t_\t(\\d+)\t(\\S+)\t.+");
         for (String line : parsedTokens) {
             line = line.trim();
-            if (line.length() == 0) continue;
+            if (line.length() == 0) {
+                continue;
+            }
             
             Matcher matcher = pattern.matcher(line);
             matcher.matches();

@@ -70,7 +70,9 @@ public class TreeAnalyzer {
         List<Dependency> filtered = new ArrayList<>();
         
         for (Dependency dependency : list) {
-            if (dependency.reln().equals("root")) continue;
+            if (dependency.reln().equals("root")) {
+                continue;
+            }
             
             Tree gov = findLeafForToken(dependency.gov(), dependency.govId() - 1);
             String govNature = getGrammaticalNatureOfLeaf(gov);
@@ -129,14 +131,17 @@ public class TreeAnalyzer {
         for (int i = 0; i < leaves.size(); i++) {
             Tree leaf = leaves.get(i);
             if (leaf.label().value().equals(token)) {
-                if (considerIndices && i != index) continue;
+                if (considerIndices && i != index) {
+                    continue;
+                }
+                
                 return leaf;
             }
         }
         
         /* No match was found */
-        String msg = considerIndices ? token + " not present at index " + index :
-            token + " does not match any leaf in the tree";
+        String msg = considerIndices ? token + " not present at index " + index
+                : token + " does not match any leaf in the tree";
         throw new NoSuchElementException(msg);
     }
     
@@ -202,8 +207,8 @@ public class TreeAnalyzer {
     private List<Tuple<String, String>> initPosTags() {
         List<Tuple<String, String>> posTags = new ArrayList<>();
         for (Tree leaf : leaves) {
-            Tuple<String, String> wordAndTag = new Tuple<String,String>
-                    (leaf.value(), getGrammaticalNatureOfLeaf(leaf));
+            Tuple<String, String> wordAndTag = new Tuple<String, String>(
+                    leaf.value(), getGrammaticalNatureOfLeaf(leaf));
             
             posTags.add(wordAndTag);
         }

@@ -22,7 +22,9 @@ public final class FileUtils {
      */
     public static void clearDirectory(String path) {
         File directory = new File(path);
-        if (!directory.isDirectory()) throw new IllegalArgumentException("not a directory");
+        if (!directory.isDirectory()) {
+            throw new IllegalArgumentException("not a directory");
+        }
         
         for (File file : directory.listFiles()) {
             file.delete();
@@ -48,7 +50,9 @@ public final class FileUtils {
             
             if (!considerEmptyLines) {
                 line = line.trim();
-                if (line.isEmpty()) continue;
+                if (line.isEmpty()) {
+                    continue;
+                }
             }
             
             action.accept(line);

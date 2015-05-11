@@ -21,7 +21,9 @@ public class ParsedArticle implements Entity {
     public ParsedArticle(int id, List<ParsedSentence> parsedSentences, List<String> nouns) {
         Preconditions.throwIfNullOrEmpty("Cannot construct a parsed article with no sentences", parsedSentences);
         Preconditions.throwIfNullOrEmpty("Cannot construct a parsed article with no nouns", nouns);
-        if (id < 0) throw new IllegalArgumentException("article id must be positive");
+        if (id < 0) {
+            throw new IllegalArgumentException("article id must be positive");
+        }
         
         this.id = id;
         this.parsedSentences = new ArrayList<>(parsedSentences);
@@ -71,5 +73,33 @@ public class ParsedArticle implements Entity {
     public void clear() {
         // TODO Auto-generated method stub
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        ParsedArticle other = (ParsedArticle) obj;
+        if (id != other.id) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }

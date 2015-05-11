@@ -27,9 +27,12 @@ public class Article implements Entity {
             String title, String contents, Timestamp creationDate, ParsedArticle parsed) {
         Preconditions.throwIfEmptyString("article title and content must not be empty", title, contents);
         Preconditions.throwIfNull("article construction requires non-null values", language, creationDate);
-        if (id < 0) throw new IllegalArgumentException("article id must be positive");
-        if (parsed != null && parsed.id() != id)
+        if (id < 0) {
+            throw new IllegalArgumentException("article id must be positive");
+        }
+        if (parsed != null && parsed.id() != id) {
             throw new IllegalArgumentException("parsed article id does not match");
+        }
         
         this.id = id;
         this.language = language;
@@ -130,5 +133,45 @@ public class Article implements Entity {
     public void clear() {
         // TODO Auto-generated method stub
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        result = prime * result
+                + ((language == null) ? 0 : language.hashCode());
+        result = prime * result + ((title == null) ? 0 : title.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Article other = (Article) obj;
+        if (id != other.id) {
+            return false;
+        }
+        if (language != other.language) {
+            return false;
+        }
+        if (title == null) {
+            if (other.title != null) {
+                return false;
+            }
+        } else if (!title.equals(other.title)) {
+            return false;
+        }
+        return true;
+    }
+    
 
 }

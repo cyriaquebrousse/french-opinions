@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 /**
  * Models a tuple (pair of values)
+ * 
+ * @param <X>
+ * @param <Y>
  * @author Cyriaque Brousse
  */
 public final class Tuple<X, Y> implements Serializable {
@@ -34,23 +37,30 @@ public final class Tuple<X, Y> implements Serializable {
     
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Tuple<?, ?> other = (Tuple<?, ?>) obj;
         if (_1 == null) {
-            if (other._1 != null)
+            if (other._1 != null) {
                 return false;
-        } else if (!_1.equals(other._1))
+            }
+        } else if (!_1.equals(other._1)) {
             return false;
+        }
         if (_2 == null) {
-            if (other._2 != null)
+            if (other._2 != null) {
                 return false;
-        } else if (!_2.equals(other._2))
+            }
+        } else if (!_2.equals(other._2)) {
             return false;
+        }
         return true;
     }
     

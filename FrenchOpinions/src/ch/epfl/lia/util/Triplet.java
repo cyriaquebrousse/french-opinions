@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 /**
  * Models a triplet (three elements together)
+ * 
+ * @param <X>
+ * @param <Y>
+ * @param <Z>
  * @author Cyriaque Brousse
  */
 public final class Triplet<X, Y, Z> implements Serializable {
@@ -53,28 +57,37 @@ public final class Triplet<X, Y, Z> implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Triplet<?, ?, ?> other = (Triplet<?, ?, ?>) obj;
         if (_1 == null) {
-            if (other._1 != null)
+            if (other._1 != null) {
                 return false;
-        } else if (!_1.equals(other._1))
+            }
+        } else if (!_1.equals(other._1)) {
             return false;
+        }
         if (_2 == null) {
-            if (other._2 != null)
+            if (other._2 != null) {
                 return false;
-        } else if (!_2.equals(other._2))
+            }
+        } else if (!_2.equals(other._2)) {
             return false;
+        }
         if (_3 == null) {
-            if (other._3 != null)
+            if (other._3 != null) {
                 return false;
-        } else if (!_3.equals(other._3))
+            }
+        } else if (!_3.equals(other._3)) {
             return false;
+        }
         return true;
     }
     

@@ -47,7 +47,8 @@ public class Main {
     private static final List<Character> SPECIAL_CHARS = Arrays.asList('\'', '\"', '«', '»', '%', '$', '£', '€', '`');
     private static final Language LANGUAGE = Language.FRENCH;
     
-    public static void main(String[] args) throws IOException, ParseException, TopicExtractionException, OpinionExtractionException {
+    public static void main(String[] args) throws IOException, ParseException,
+            TopicExtractionException, OpinionExtractionException {
         
         final LanguageParser parser = new FrenchParser();
         final List<Article> articles = new ArrayList<>();
@@ -226,7 +227,7 @@ public class Main {
             
             /* Printing the topic list */
             for (Topic topic : topics) {
-                System.out.println(topic.lineId() + "\t[" + topic.polarity() + "]\t" + topic.keys());
+                System.out.println(topic.lineId() + "\t" + topic.keys());
             }
             
         } catch (IOException e) {

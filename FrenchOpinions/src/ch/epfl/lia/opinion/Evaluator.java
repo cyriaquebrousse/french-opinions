@@ -20,7 +20,7 @@ import ch.epfl.lia.util.Preconditions;
  */
 public final class Evaluator {
     
-    private final Comparator<Article> ARTICLE_SCORE_COMPARATOR = initArticleScoreComparator();
+    private final Comparator<Article> articleScoreComparator = initArticleScoreComparator();
     
     private final Map<Article, Set<Opinion>> opsetMap;
     private final Map<Article, Integer> scoreMap;
@@ -58,7 +58,7 @@ public final class Evaluator {
      */
     public Article leastPositiveArticle() {
         if (leastPositiveArticle == null) {
-            Optional<Article> someArticle = scoreMap.keySet().stream().min(ARTICLE_SCORE_COMPARATOR);
+            Optional<Article> someArticle = scoreMap.keySet().stream().min(articleScoreComparator);
             if (someArticle.isPresent()) {
                 this.leastPositiveArticle = someArticle.get();
             }
@@ -73,7 +73,7 @@ public final class Evaluator {
      */
     public Article mostPositiveArticle() {
         if (mostPositiveArticle == null) {
-            Optional<Article> someArticle = scoreMap.keySet().stream().max(ARTICLE_SCORE_COMPARATOR);
+            Optional<Article> someArticle = scoreMap.keySet().stream().max(articleScoreComparator);
             if (someArticle.isPresent()) {
                 this.mostPositiveArticle = someArticle.get();
             }
@@ -92,10 +92,15 @@ public final class Evaluator {
                 int count1 = opsetMap.get(_1).size();
                 int count2 = opsetMap.get(_2).size();
                 
-                if (count1 < count2) return -1;
-                else if (count1 == count2) return 0;
-                else return 1;
+                if (count1 < count2) {
+                    return -1;
+                } else if (count1 == count2) {
+                    return 0;
+                } else {
+                    return 1;
+                }
             });
+            
             if (someArticle.isPresent()) {
                 this.biggestOpinionCount = someArticle.get();
             }
@@ -171,9 +176,13 @@ public final class Evaluator {
             int score1 = scoreMap.get(_1);
             int score2 = scoreMap.get(_2);
             
-            if (score1 < score2) return -1;
-            else if (score1 == score2) return 0;
-            else return 1;
+            if (score1 < score2) {
+                return -1;
+            } else if (score1 == score2) {
+                return 0;
+            } else {
+                return 1;
+            }
         };
     }
 

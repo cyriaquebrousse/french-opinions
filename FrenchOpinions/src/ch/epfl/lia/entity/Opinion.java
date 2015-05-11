@@ -33,12 +33,12 @@ public class Opinion implements Entity {
 
     public Opinion(Topic topic, String topicWord, int topicWordId,
             String polarityWord, int polarityWordId, Polarity polarity) {
-        Preconditions.throwIfEmptyString("polarity and topic words may not be empty",
-                polarityWord, topicWord);
-        if (polarityWordId < 0 || topicWordId < 0)
-            throw new IllegalArgumentException("word ids must be positive");
+        Preconditions.throwIfEmptyString("polarity and topic words may not be empty", polarityWord, topicWord);
         Preconditions.throwIfNull("topic may not be null", topic);
         Preconditions.throwIfNull("polarity may not be null", polarity);
+        if (polarityWordId < 0 || topicWordId < 0) {
+            throw new IllegalArgumentException("word ids must be positive");
+        }
         
         this.topic = topic;
         this.topicWord = topicWord;
@@ -123,29 +123,39 @@ public class Opinion implements Entity {
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Opinion other = (Opinion) obj;
         if (polarWord == null) {
-            if (other.polarWord != null)
+            if (other.polarWord != null) {
                 return false;
-        } else if (!polarWord.equals(other.polarWord))
+            }
+        } else if (!polarWord.equals(other.polarWord)) {
             return false;
-        if (polarWordId != other.polarWordId)
+        }
+        if (polarWordId != other.polarWordId) {
             return false;
-        if (polarity != other.polarity)
+        }
+        if (polarity != other.polarity) {
             return false;
+        }
         if (topicWord == null) {
-            if (other.topicWord != null)
+            if (other.topicWord != null) {
                 return false;
-        } else if (!topicWord.equals(other.topicWord))
+            }
+        } else if (!topicWord.equals(other.topicWord)) {
             return false;
-        if (topicWordId != other.topicWordId)
+        }
+        if (topicWordId != other.topicWordId) {
             return false;
+        }
         return true;
     }
     
