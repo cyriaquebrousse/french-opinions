@@ -27,6 +27,6 @@ mallet/
 # Project-specific files
 raw/
 parsed/
-topic/
+topics/
 jar/
 !jar/jars_to_copy
