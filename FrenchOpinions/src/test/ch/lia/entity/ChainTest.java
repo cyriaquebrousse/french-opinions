@@ -1,12 +1,16 @@
 package ch.lia.entity;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
 import ch.epfl.lia.entity.Chain;
 import ch.epfl.lia.entity.Dependency;
 
+/**
+ * @author Cyriaque Brousse
+ */
 public class ChainTest {
     
     private static final Dependency DEP_1 = new Dependency("mod(obésité-5,hypertension-9)");

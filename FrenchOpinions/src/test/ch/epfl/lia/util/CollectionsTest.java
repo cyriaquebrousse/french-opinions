@@ -1,14 +1,14 @@
 package ch.epfl.lia.util;
 
+import static ch.epfl.lia.util.Collections.exclude;
+import static org.junit.Assert.assertEquals;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import static ch.epfl.lia.util.Collections.*;
-import static org.junit.Assert.*;
 
 /**
  * @author Cyriaque Brousse
@@ -18,7 +18,7 @@ public class CollectionsTest {
     private static final Set<Number> DUMMY_SET = new HashSet<>();
     
     @Before
-    public void setup() {
+    public void setUp() {
         DUMMY_SET.addAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7.5));
     }
 

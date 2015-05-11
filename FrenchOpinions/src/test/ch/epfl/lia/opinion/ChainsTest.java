@@ -1,6 +1,7 @@
 package ch.epfl.lia.opinion;
 
-import static org.junit.Assert.*;
+import static ch.epfl.lia.opinion.Chains.allChainsFromFirst;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -10,7 +11,6 @@ import org.junit.Test;
 
 import ch.epfl.lia.entity.Chain;
 import ch.epfl.lia.entity.Dependency;
-import static ch.epfl.lia.opinion.Chains.*;
 
 /**
  * @author Cyriaque Brousse
