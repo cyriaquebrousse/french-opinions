@@ -840,7 +840,7 @@ sérénité	0	0	1
 sexy	0	0	1
 nette	0	0	1
 net	0	0	1
-simple	1	0	0
+simple	0	0	1
 simpliste	1	0	0
 simplifié	0	0	1
 simplifier	0	0	1
@@ -3755,6 +3755,8 @@ séducteur	0	0	1
 charisme	0	0	1
 charismatique	0	0	1
 effet positif	0	0	1
+effet	0	1	0
+effets	0	1	0
 don	0	0	1
 perspective	0	0	1
 win	0	0	1
