@@ -20,19 +20,19 @@ import ch.epfl.lia.util.Preconditions;
 
 /**
  * Extracts the Stanford dependencies from a given CoNLL-format input file.<br>
+ * Uses the MALT parser for dependency extraction.<br>
  * Operates in three steps: sanitizing, parsing, extraction.
  * 
  * @author Cyriaque Brousse
  */
-public final class DependencyExtractionPipeline {
+public final class FrenchDependencyExtractionPipeline implements DependencyExtractor {
     
     private final TreeAnalyzer analyzer;
     private final String conllInputFile;
 
-    public DependencyExtractionPipeline(String conllInputFilePath, TreeAnalyzer analyzer) {
-        if (conllInputFilePath == null || conllInputFilePath.isEmpty() || analyzer == null) {
-            throw new NullPointerException("cannot construct pipeline with null parameters");
-        }
+    public FrenchDependencyExtractionPipeline(String conllInputFilePath, TreeAnalyzer analyzer) {
+        Preconditions.throwIfEmptyString("cannot open null path", conllInputFilePath);
+        Preconditions.throwIfNull("cannot construct pipeline with null analyzer", analyzer);
         
         this.conllInputFile = conllInputFilePath;
         this.analyzer = analyzer;
@@ -44,7 +44,8 @@ public final class DependencyExtractionPipeline {
      * @return the list of extracted dependencies
      * @throws DependencyExtractionException
      */
-    public List<Dependency> process() throws DependencyExtractionException {
+    @Override
+    public List<Dependency> extract() throws DependencyExtractionException {
         List<Dependency> dependencies;
         
         try {
@@ -194,7 +195,10 @@ public final class DependencyExtractionPipeline {
                 gov = analyzer.leaves().get(govId - 1).value();
             }
             
-            dependencies.add(new Dependency(reln, gov, govId, dep, depId));
+            final String govPos = analyzer.posTagOfWord(gov, govId);
+            final String depPos = analyzer.posTagOfWord(dep, depId);
+            
+            dependencies.add(new Dependency(reln, gov, govId, govPos, dep, depId, depPos));
         }
         
         return dependencies;

@@ -7,11 +7,12 @@ import java.util.Optional;
 import java.util.Set;
 
 import ch.epfl.lia.entity.Chain;
-import ch.epfl.lia.entity.Dependency;
 import ch.epfl.lia.entity.Opinion;
 import ch.epfl.lia.entity.ParsedArticle;
 import ch.epfl.lia.entity.ParsedSentence;
 import ch.epfl.lia.entity.Topic;
+import ch.epfl.lia.nlp.Dependency;
+import ch.epfl.lia.nlp.Word;
 import ch.epfl.lia.opinion.dictionary.FrenchSentimentDictionary;
 import ch.epfl.lia.opinion.dictionary.Polarity;
 import ch.epfl.lia.opinion.dictionary.SentimentDictionary;
@@ -63,34 +64,35 @@ public class FrenchOpinionExtractor extends OpinionExtractor {
         final Set<Opinion> opinions = new HashSet<>();
         
         /* Determining topic word */
-        final String topicWord;
-        final int topicWordId;
-        final String otherWord;
-        final int otherWordId;
+        final Word topicWord;
+        final Word otherWord;
         
-        if (topic.keys().contains(dependency.gov())) {
+        /* The first word of the dependency is the topical word */
+        if (topic.keys().contains(dependency.gov().value())) {
             topicWord = dependency.gov();
-            topicWordId = dependency.govId();
             otherWord = dependency.dep();
-            otherWordId = dependency.depId();
-        } else if (topic.keys().contains(dependency.dep())) {
+        /* The second word is */
+        } else if (topic.keys().contains(dependency.dep().value())) {
             topicWord = dependency.dep();
-            topicWordId = dependency.depId();
             otherWord = dependency.gov();
-            otherWordId = dependency.govId();
         } else {
             return opinions;
         }
         
         /* If the second word is polar */
-        final Optional<Polarity> polarityLookup = dictionary.lookup(otherWord);
+        final Optional<Polarity> polarityLookup = dictionary.lookup(otherWord.value());
         if (polarityLookup.isPresent()) {
-            final String polarityWord = otherWord;
-            final int polarityWordId = otherWordId;
+            final Word polarityWord = otherWord;
             final Polarity polarity = polarityLookup.get();
             
+            /* Determine whether the topical word is polar as well */
+            final Optional<Polarity> topicalWordPolarityLookup = dictionary.lookup(topicWord.value());
+            if (topicalWordPolarityLookup.isPresent()) {
+                System.err.println(topicWord);
+            }
+            
             /* An opinion was found */
-            opinions.add(new Opinion(topic, topicWord, topicWordId, polarityWord, polarityWordId, polarity));
+            opinions.add(new Opinion(topic, topicWord, polarityWord, polarity));
             
             /* Try to find and analyze chains, starting with this dependency */
             final Collection<Opinion> chainOpinions = new HashSet<>();
@@ -112,15 +114,13 @@ public class FrenchOpinionExtractor extends OpinionExtractor {
      */
     private Optional<Opinion> analyzeChain(Chain chain, Topic topic) {
         /* Consider the whole chain as a single dependency */
-        final String topicWord = chain.first().gov();
-        final int topicWordId = chain.first().govId();
-        final String polarityWord = chain.last().dep();
-        final int polarityWordId = chain.last().depId();
+        final Word topicWord = chain.first().gov();
+        final Word polarityWord = chain.last().dep();
         
-        final Optional<Polarity> lastDepPolarityLookup = dictionary.lookup(chain.last().dep());
+        final Optional<Polarity> lastDepPolarityLookup = dictionary.lookup(chain.last().dep().value());
         if (lastDepPolarityLookup.isPresent()) {
             final Polarity polarity = lastDepPolarityLookup.get();
-            return Optional.of(new Opinion(topic, topicWord, topicWordId, polarityWord, polarityWordId, polarity));
+            return Optional.of(new Opinion(topic, topicWord, polarityWord, polarity));
         } else {
             return Optional.empty();
         }
