@@ -2756,9 +2756,11 @@ notoirement	1	0	0
 notoire	1	0	0
 nuisance	1	0	0
 obèse	1	0	0
+obèses	1	0	0
 obésité	1	0	0
 hypertension	1	0	0
 arthrose	1	0	0
+insulinorésistance	1	0	0
 objection	1	0	0
 inconscient	1	0	0
 masquer	1	0	0
