@@ -13,11 +13,11 @@ import ch.epfl.lia.nlp.Dependency;
  */
 public class ChainTest {
     
-    private static final Dependency DEP_1 = new Dependency("mod(obésité-5,hypertension-9)");
-    private static final Dependency DEP_2 = new Dependency("mod(hypertension-9,arthrose-13)");
-    private static final Dependency DEP_3 = new Dependency("mod(arthrose-13,mauvaise-12)");
-    
-    private static final Dependency DEP_BAD_1 = new Dependency("mod(obésité-5,diabète-7)");
+    private static final Dependency DEP_1 = new Dependency("mod", "obésité", 5, "NC", "hypertension", 9, "NC");
+    private static final Dependency DEP_2 = new Dependency("mod", "hypertension", 9, "NC", "arthrose", 13, "NC");
+    private static final Dependency DEP_3 = new Dependency("mod", "arthrose", 13, "NC", "mauvaise", 12, "ADJ");
+
+    private static final Dependency DEP_BAD_1 = new Dependency("mod", "obésité",5,"NC","diabète",7,"NC");
 
     @Test
     public void testTwoGoodDeps() {

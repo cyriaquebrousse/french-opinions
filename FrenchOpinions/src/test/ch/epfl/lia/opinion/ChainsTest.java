@@ -17,10 +17,10 @@ import ch.epfl.lia.nlp.Dependency;
  */
 public class ChainsTest {
     
-    private static final Dependency DEP_1 = new Dependency("mod(obésité-5,hypertension-9)");
-    private static final Dependency DEP_2 = new Dependency("mod(hypertension-9,arthrose-13)");
-    private static final Dependency DEP_3 = new Dependency("mod(arthrose-13,mauvaise-12)");
-    private static final Dependency DEP_4 = new Dependency("dep(hypertension-9,morbide-17)");
+    private static final Dependency DEP_1 = new Dependency("mod", "obésité", 5, "NC", "hypertension", 9, "NC");
+    private static final Dependency DEP_2 = new Dependency("mod", "hypertension", 9, "NC", "arthrose", 13, "NC");
+    private static final Dependency DEP_3 = new Dependency("mod", "arthrose", 13, "NC", "mauvaise", 12, "ADJ");
+    private static final Dependency DEP_4 = new Dependency("dep", "hypertension", 9, "NC", "morbide", 17, "ADJ");
 
     @Test
     public void testGetTwoDepsChain() {

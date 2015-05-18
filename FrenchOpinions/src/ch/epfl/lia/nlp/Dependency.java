@@ -1,7 +1,6 @@
 package ch.epfl.lia.nlp;
 
 import java.io.Serializable;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ch.epfl.lia.util.Preconditions;
