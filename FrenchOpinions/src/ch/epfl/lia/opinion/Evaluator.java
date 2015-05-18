@@ -53,6 +53,16 @@ public final class Evaluator {
     }
     
     /**
+     * @param article
+     * @return the number of opinions registered for this article
+     */
+    public int opinionCount(Article article) {
+        Preconditions.throwIfNull("article was null", article);
+        
+        return opsetMap.get(article).size();
+    }
+
+    /**
      * @return the article with the lowest score, or {@code null} if no opinions
      *         were extracted
      */
@@ -110,16 +120,6 @@ public final class Evaluator {
     }
     
     /**
-     * @param article
-     * @return the number of opinions registered for this article
-     */
-    public int opinionCount(Article article) {
-        Preconditions.throwIfNull("article was null", article);
-        
-        return opsetMap.get(article).size();
-    }
-    
-    /**
      * @return the average number of extracted opinions, or {@link Double#NaN}
      *         if no opinions were extracted
      */
@@ -173,8 +173,8 @@ public final class Evaluator {
 
     private Comparator<Article> initArticleScoreComparator() {
         return (_1, _2) -> {
-            int score1 = scoreMap.get(_1);
-            int score2 = scoreMap.get(_2);
+            final int score1 = scoreMap.get(_1);
+            final int score2 = scoreMap.get(_2);
             
             if (score1 < score2) {
                 return -1;

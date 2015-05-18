@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import ch.epfl.lia.entity.Chain;
-import ch.epfl.lia.entity.Dependency;
+import ch.epfl.lia.nlp.Dependency;
 
 /**
  * Collection of utility methods on dependency chains

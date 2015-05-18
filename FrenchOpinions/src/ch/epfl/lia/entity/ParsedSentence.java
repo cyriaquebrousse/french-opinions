@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.epfl.lia.nlp.Dependency;
 import ch.epfl.lia.util.Preconditions;
 import ch.epfl.lia.util.Tuple;
 import edu.stanford.nlp.trees.Tree;

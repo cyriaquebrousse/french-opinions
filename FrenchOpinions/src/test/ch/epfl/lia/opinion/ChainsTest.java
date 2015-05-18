@@ -10,7 +10,7 @@ import java.util.Set;
 import org.junit.Test;
 
 import ch.epfl.lia.entity.Chain;
-import ch.epfl.lia.entity.Dependency;
+import ch.epfl.lia.nlp.Dependency;
 
 /**
  * @author Cyriaque Brousse

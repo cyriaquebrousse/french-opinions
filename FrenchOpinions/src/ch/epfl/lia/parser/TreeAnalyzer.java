@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import ch.epfl.lia.entity.Dependency;
 import ch.epfl.lia.main.Config;
+import ch.epfl.lia.nlp.Dependency;
 import ch.epfl.lia.util.Tuple;
 import edu.stanford.nlp.trees.Tree;
 

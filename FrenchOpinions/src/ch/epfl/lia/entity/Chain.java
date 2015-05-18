@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import ch.epfl.lia.nlp.Dependency;
 import ch.epfl.lia.util.Preconditions;
 
 /**

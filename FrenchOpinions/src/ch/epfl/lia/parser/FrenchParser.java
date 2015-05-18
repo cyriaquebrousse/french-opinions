@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.epfl.lia.entity.Article;
-import ch.epfl.lia.entity.Dependency;
 import ch.epfl.lia.entity.Language;
 import ch.epfl.lia.entity.ParsedArticle;
 import ch.epfl.lia.entity.ParsedSentence;
+import ch.epfl.lia.nlp.Dependency;
 import ch.epfl.lia.util.Preconditions;
 import ch.epfl.lia.util.Tuple;
 import edu.stanford.nlp.ling.HasWord;

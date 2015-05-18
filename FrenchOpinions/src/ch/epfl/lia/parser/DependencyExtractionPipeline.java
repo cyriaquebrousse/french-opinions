@@ -15,7 +15,7 @@ import org.maltparser.concurrent.ConcurrentMaltParserModel;
 import org.maltparser.concurrent.ConcurrentMaltParserService;
 import org.maltparser.core.exception.MaltChainedException;
 
-import ch.epfl.lia.entity.Dependency;
+import ch.epfl.lia.nlp.Dependency;
 import ch.epfl.lia.util.Preconditions;
 
 /**

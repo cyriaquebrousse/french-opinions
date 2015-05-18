@@ -1,4 +1,4 @@
-package ch.epfl.lia.entity;
+package ch.epfl.lia.nlp;
 
 import java.io.Serializable;
 import java.util.regex.Matcher;
