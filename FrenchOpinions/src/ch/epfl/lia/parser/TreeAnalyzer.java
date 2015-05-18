@@ -1,9 +1,9 @@
 package ch.epfl.lia.parser;
+import static ch.epfl.lia.main.Config.POS_NOUNS_FR;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-import ch.epfl.lia.main.Config;
 import ch.epfl.lia.util.Tuple;
 import edu.stanford.nlp.trees.Tree;
 
@@ -35,7 +35,7 @@ public class TreeAnalyzer {
      * @return the leaves contained in the underlying parse tree
      */
     public List<Tree> leaves() {
-        return new ArrayList<Tree>(leaves);
+        return new ArrayList<>(leaves);
     }
 
     /**
@@ -43,7 +43,7 @@ public class TreeAnalyzer {
      * @see #leaves()
      */
     public List<Tree> nouns() {
-        return new ArrayList<Tree>(nouns);
+        return new ArrayList<>(nouns);
     }
     
     /**
@@ -53,6 +53,16 @@ public class TreeAnalyzer {
         return new ArrayList<>(wordsAndTags);
     }
     
+    /**
+     * @param word
+     *            the string value of the word
+     * @param id
+     *            the word id in the sentence, where the word indices start at 0
+     * @return the part of speech tag of the provided word, or {@code null} if
+     *         the word wasn't found in the sentence. This should not happen in
+     *         general, but it might in case of junk tokens such as non-word
+     *         single-character tokens (e.g. "`" or "''")
+     */
     public String posTagOfWord(String word, int id) {
         return getGrammaticalNatureOfLeaf(findLeafForToken(word, id));
     }
@@ -69,42 +79,18 @@ public class TreeAnalyzer {
         return strings;
     }
     
-    /** Finds a tree path from a leaf to another leaf (a word to another word in the sentence).
-     * @param startLeaf
-     * @param endLeaf
-     */
-    public void printPathLeafToLeaf(String startLeaf, String endLeaf) {
-        Tree start = findLeafForToken(startLeaf);
-        Tree end = findLeafForToken(endLeaf);
-        
-        List<Tree> path = tree.pathNodeToNode(start, end);
-        printPath(path);
-    }
-
-    /**
-     * @return the first leaf that contains the token
-     * @throws NoSuchElementException
-     *             if no such {@code Tree} was found
-     *             {@link #findLeafForToken(String, int)}
-     */
-    public Tree findLeafForToken(String token) {
-        return findLeafForToken(token, -1);
-    }
-
     /**
      * @param token
      *            the token (~ string) contained in the leaf we are looking for
      * @param index
      *            the index of the token in the sentence, where the indices
-     *            start at 0. If the index is -1, we will return the first leaf
-     *            that matches the token, starting at the beginning of the
-     *            sentence.
-     * @return the {@code index}-th {@code Tree} that contains the token. It is
-     *         never {@code null}
-     * @throws NoSuchElementException
-     *             if no such {@code Tree} was found
+     *            start at 0. If the index is {@code -1}, we will return the
+     *            first leaf that matches the token, starting at the beginning
+     *            of the sentence.
+     * @return the {@code index}-th {@code Tree} that contains the token, or
+     *         {@code null} if it wasn't found
      */
-    public Tree findLeafForToken(String token, int index) {
+    private Tree findLeafForToken(String token, int index) {
         final boolean considerIndices = index != -1;
         if (considerIndices && (index < 0 || index >= leaves.size())) {
             throw new ArrayIndexOutOfBoundsException(index + " not a valid leaf index");
@@ -124,34 +110,29 @@ public class TreeAnalyzer {
         /* No match was found */
         String msg = considerIndices ? token + " not present at index " + index
                 : token + " does not match any leaf in the tree";
-        throw new NoSuchElementException(msg);
+        System.err.println(msg);
+        return null;
     }
     
     /**
-     * @param token
-     * @return grammatical nature (POS) of the token
+     * @param leaf
+     *            if {@code null}, the return value will be null
+     * @return grammatical nature (POS tag) of the token, or {@code null} if the
+     *         argument was {@code null} as well
      */
-    public String getGrammaticalNatureOfLeaf(Tree token) {
-        if (!token.isLeaf()) {
+    private String getGrammaticalNatureOfLeaf(Tree leaf) {
+        if (leaf == null) {
+            return null;
+        }
+        
+        if (!leaf.isLeaf()) {
             throw new IllegalArgumentException("token was not a leaf");
         }
         
-        Tree parent = token.parent(this.tree);
+        Tree parent = leaf.parent(this.tree);
         return parent.label().value();
     }
     
-    private void printPath(List<Tree> path) {
-        if (path != null && !path.isEmpty()) {
-            System.out.print("[");
-            for (Tree node : path) {
-                System.out.print(" -> " + node.label());
-            }
-            System.out.println("]");
-        } else {
-            System.out.println("The path is empty");
-        }
-    }
-
     private List<Tree> objectArrayToTreeList() {
         Object[] all = tree.toArray();
         List<Tree> asList = new ArrayList<>();
@@ -165,22 +146,28 @@ public class TreeAnalyzer {
 
     private List<Tree> initNouns() {
         List<Tree> nouns = new ArrayList<>();
-        for (Tree leaf : leaves) {
-            if (Config.POS_NOUNS_FR.contains(getGrammaticalNatureOfLeaf(leaf))) {
-                nouns.add(leaf);
-            }
-        }
+//        for (Tree leaf : leaves) {
+//            if (Config.POS_NOUNS_FR.contains(getGrammaticalNatureOfLeaf(leaf))) {
+//                nouns.add(leaf);
+//            }
+//        }
+        leaves.stream().filter(l -> POS_NOUNS_FR.contains(getGrammaticalNatureOfLeaf(l)))
+                .forEach(l -> nouns.add(l));
+        
         return nouns;
     }
     
     private List<Tuple<String, String>> initPosTags() {
         List<Tuple<String, String>> posTags = new ArrayList<>();
-        for (Tree leaf : leaves) {
-            Tuple<String, String> wordAndTag = new Tuple<String, String>(
-                    leaf.value(), getGrammaticalNatureOfLeaf(leaf));
-            
-            posTags.add(wordAndTag);
-        }
+//        for (Tree leaf : leaves) {
+//            Tuple<String, String> wordAndTag = new Tuple<String, String>(
+//                    leaf.value(), getGrammaticalNatureOfLeaf(leaf));
+//            
+//            posTags.add(wordAndTag);
+//        }
+        
+        /* add the couple (word,tag) */
+        leaves.stream().forEach(l -> posTags.add(new Tuple<>(l.value(), getGrammaticalNatureOfLeaf(l))));
         return posTags;
     }
     

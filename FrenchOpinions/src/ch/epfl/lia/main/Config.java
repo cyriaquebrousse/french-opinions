@@ -43,6 +43,9 @@ public final class Config {
     /** Location of extracted nouns (all languages) */
     public static final String NOUNS_LOCATION = "parsed/nouns/";
 
+    /** Regexp that matches non-junk tokens (this to avoid tokens as "`") */
+    public static final String NOT_JUNK_DEP_REGEXP = "^\\p{L}+.*$";
+
     private Config() { }
 
 }
