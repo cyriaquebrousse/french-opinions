@@ -88,7 +88,7 @@ public class FrenchOpinionExtractor extends OpinionExtractor {
             /* Determine whether the topical word is polar as well */
             final Optional<Polarity> topicalWordPolarityLookup = dictionary.lookup(topicWord.value());
             if (topicalWordPolarityLookup.isPresent()) {
-                System.err.println(topicWord);
+                System.err.println(topicWord); //TODO
             }
             
             /* An opinion was found */

@@ -1,7 +1,6 @@
 package ch.epfl.lia.nlp;
 
 import java.io.Serializable;
-import java.util.regex.Pattern;
 
 import ch.epfl.lia.util.Preconditions;
 
@@ -12,28 +11,9 @@ public class Dependency implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
-    private static final Pattern PATTERN = Pattern.compile("^(.+)\\((.+)-(\\d+)'*,(.+)-(\\d+)'*\\)$");
-    private static final int RELN_GRP = 1;
-    private static final int GOV_GRP = 2;
-    private static final int GOVID_GRP = 3;
-    private static final int DEP_GRP = 4;
-    private static final int DEPID_GRP = 5;
-
     private final String reln;
     private final Word gov;
     private final Word dep;
-
-//    public Dependency(String raw) {
-//        Preconditions.throwIfEmptyString("raw string may not be empty", raw);
-//        
-//        Matcher matcher = PATTERN.matcher(raw);
-//        matcher.matches();
-//        reln = matcher.group(RELN_GRP);
-//        gov = matcher.group(GOV_GRP);
-//        govId = Integer.parseInt(matcher.group(GOVID_GRP));
-//        dep = matcher.group(DEP_GRP);
-//        depId = Integer.parseInt(matcher.group(DEPID_GRP));
-//    }
 
     public Dependency(String reln, String gov, int govId, String govPos, String dep, int depId, String depPos) {
         Preconditions.throwIfEmptyString("dependency members may not be empty", reln, gov, dep, govPos, depPos);

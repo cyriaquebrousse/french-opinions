@@ -40,6 +40,11 @@ public class Word implements Serializable {
     public String posTag() {
         return posTag;
     }
+    
+    @Override
+    public String toString() {
+        return value;
+    }
 
     @Override
     public int hashCode() {

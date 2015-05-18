@@ -58,7 +58,8 @@ public class FrenchParser extends LanguageParser {
                 saveConll(conllOutputLocation, tree);
                 
                 /* Dependencies extraction */
-                FrenchDependencyExtractionPipeline pipeline = new FrenchDependencyExtractionPipeline(conllOutputLocation, analyzer);
+                FrenchDependencyExtractionPipeline pipeline = new FrenchDependencyExtractionPipeline(
+                        conllOutputLocation, analyzer);
                 List<Dependency> dependencies = pipeline.extract();
                 
                 /* Part of speech tags and nouns extraction */
