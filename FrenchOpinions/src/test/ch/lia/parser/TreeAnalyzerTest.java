@@ -1,10 +1,12 @@
 package ch.lia.parser;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.junit.Test;
 
@@ -60,6 +62,30 @@ public class TreeAnalyzerTest {
         List<String> actualNouns = treeListAsStringList(analyzer.nouns());
         
         assertEquals(EXP_NOUNS_SENT_2, actualNouns);
+    }
+    
+    @Test
+    public void testFirstPosLookupCorrect() {
+        Tree tree = PARSER.parse("Le chien est un chien.");
+        TreeAnalyzer analyzer = new TreeAnalyzer(tree);
+        
+        assertEquals("NC", analyzer.posTagOfWord("chien", 2));
+        assertEquals("NC", analyzer.posTagOfWord("chien", 5));
+    }
+    
+    @Test
+    public void testPosLookupFailsWhenIncorrect() {
+        Tree tree = PARSER.parse("Le chien est un chien.");
+        TreeAnalyzer analyzer = new TreeAnalyzer(tree);
+        
+        try {
+            analyzer.posTagOfWord("poisson", 3);
+            fail("should throw");
+        } catch (NoSuchElementException e) {
+            /* okay */
+        } catch (Exception e) {
+            fail("wrong exception");
+        }
     }
     
     private List<String> treeListAsStringList(List<Tree> trees) {

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import ch.epfl.lia.main.Config;
-import ch.epfl.lia.nlp.Dependency;
 import ch.epfl.lia.util.Tuple;
 import edu.stanford.nlp.trees.Tree;
 
@@ -54,6 +53,10 @@ public class TreeAnalyzer {
         return new ArrayList<>(wordsAndTags);
     }
     
+    public String posTagOfWord(String word, int id) {
+        return getGrammaticalNatureOfLeaf(findLeafForToken(word, id));
+    }
+    
     /**
      * @return the nouns as a string list
      * @see #nouns()
@@ -64,27 +67,6 @@ public class TreeAnalyzer {
             strings.add(noun.value());
         }
         return strings;
-    }
-    
-    public List<Dependency> getVerbalDependencies(List<Dependency> list) {
-        List<Dependency> filtered = new ArrayList<>();
-        
-        for (Dependency dependency : list) {
-            if (dependency.reln().equals("root")) {
-                continue;
-            }
-            
-            Tree gov = findLeafForToken(dependency.gov(), dependency.govId() - 1);
-            String govNature = getGrammaticalNatureOfLeaf(gov);
-            Tree dep = findLeafForToken(dependency.dep(), dependency.depId() - 1);
-            String depNature = getGrammaticalNatureOfLeaf(dep);
-            
-            if (Config.POS_VERBS_FR.contains(govNature) || Config.POS_VERBS_FR.contains(depNature)) {
-                filtered.add(dependency);
-            }
-        }
-        
-        return filtered;
     }
     
     /** Finds a tree path from a leaf to another leaf (a word to another word in the sentence).
@@ -158,19 +140,6 @@ public class TreeAnalyzer {
         return parent.label().value();
     }
     
-    /**
-     * Print the path between the governor and the dependent words of the
-     * dependency
-     * 
-     * @param dependency
-     */
-    public void printDependencyPath(Dependency dependency) {
-        Tree gov = findLeafForToken(dependency.gov(), dependency.govId() - 1);
-        Tree dep = findLeafForToken(dependency.dep(), dependency.depId() - 1);
-        
-        printPath(tree.pathNodeToNode(gov, dep));
-    }
-
     private void printPath(List<Tree> path) {
         if (path != null && !path.isEmpty()) {
             System.out.print("[");

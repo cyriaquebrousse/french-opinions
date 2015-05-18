@@ -42,7 +42,7 @@ public final class Chains {
         List<Dependency> chainDeps = new LinkedList<>();
         allDeps.stream().filter(second -> 
                        first.dep().equals(second.gov())
-                   &&  first.depId() == second.govId()
+                   &&  first.dep().id() == second.gov().id()
                    && !first.equals(second)
                 ).forEach(d -> chainDeps.add(d));
         

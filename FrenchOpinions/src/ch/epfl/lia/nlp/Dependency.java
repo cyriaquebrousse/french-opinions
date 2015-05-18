@@ -21,34 +21,39 @@ public class Dependency implements Serializable {
     private static final int DEPID_GRP = 5;
 
     private final String reln;
-    private final String gov;
-    private final int govId;
-    private final String dep;
-    private final int depId;
+    private final Word gov;
+    private final Word dep;
 
-    public Dependency(String raw) {
-        Preconditions.throwIfEmptyString("raw string may not be empty", raw);
-        
-        Matcher matcher = PATTERN.matcher(raw);
-        matcher.matches();
-        reln = matcher.group(RELN_GRP);
-        gov = matcher.group(GOV_GRP);
-        govId = Integer.parseInt(matcher.group(GOVID_GRP));
-        dep = matcher.group(DEP_GRP);
-        depId = Integer.parseInt(matcher.group(DEPID_GRP));
-    }
+//    public Dependency(String raw) {
+//        Preconditions.throwIfEmptyString("raw string may not be empty", raw);
+//        
+//        Matcher matcher = PATTERN.matcher(raw);
+//        matcher.matches();
+//        reln = matcher.group(RELN_GRP);
+//        gov = matcher.group(GOV_GRP);
+//        govId = Integer.parseInt(matcher.group(GOVID_GRP));
+//        dep = matcher.group(DEP_GRP);
+//        depId = Integer.parseInt(matcher.group(DEPID_GRP));
+//    }
 
-    public Dependency(String reln, String gov, int govId, String dep, int depId) {
-        Preconditions.throwIfEmptyString("dependency members may not be empty", reln, gov, dep);
+    public Dependency(String reln, String gov, int govId, String govPos, String dep, int depId, String depPos) {
+        Preconditions.throwIfEmptyString("dependency members may not be empty", reln, gov, dep, govPos, depPos);
         if (govId < 0 || depId < 0) {
             throw new IllegalArgumentException("govId and depId must be positive");
         }
         
         this.reln = reln;
+        this.gov = new Word(gov, govId, govPos);
+        this.dep = new Word(dep, depId, depPos);
+    }
+    
+    public Dependency(String reln, Word gov, Word dep) {
+        Preconditions.throwIfEmptyString("reln may not be empty", reln);
+        Preconditions.throwIfNull("dependency members may not be null", gov, dep);
+        
+        this.reln = reln;
         this.gov = gov;
         this.dep = dep;
-        this.govId = govId;
-        this.depId = depId;
     }
 
     @Override
@@ -70,17 +75,11 @@ public class Dependency implements Serializable {
         } else if (!dep.equals(other.dep)) {
             return false;
         }
-        if (depId != other.depId) {
-            return false;
-        }
         if (gov == null) {
             if (other.gov != null) {
                 return false;
             }
         } else if (!gov.equals(other.gov)) {
-            return false;
-        }
-        if (govId != other.govId) {
             return false;
         }
         if (reln == null) {
@@ -98,34 +97,27 @@ public class Dependency implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((dep == null) ? 0 : dep.hashCode());
-        result = prime * result + depId;
         result = prime * result + ((gov == null) ? 0 : gov.hashCode());
-        result = prime * result + govId;
         result = prime * result + ((reln == null) ? 0 : reln.hashCode());
         return result;
     }
+    
 
     public String toString() {
-        return reln + '(' + gov + '-' + govId + ',' + dep + '-' + depId + ')';
+        return reln + '(' + gov + '-' + gov.id() + '-' + gov.posTag() + ','
+                + dep + '-' + dep.id() + '-' + dep.posTag() + ')';
     }
 
     public String reln() {
         return reln;
     }
 
-    public String gov() {
+    public Word gov() {
         return gov;
     }
 
-    public String dep() {
+    public Word dep() {
         return dep;
     }
 
-    public int govId() {
-        return govId;
-    }
-
-    public int depId() {
-        return depId;
-    }
 }

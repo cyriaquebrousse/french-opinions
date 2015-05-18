@@ -165,10 +165,10 @@ public class Chain {
      *         returns {@false}
      */
     private boolean checkChainInvariants(Dependency first, Dependency second) {
-        return first.depId() == second.govId()
-                && !wordIds.contains(first.govId())
-                && !wordIds.contains(first.depId())
-                && !wordIds.contains(second.depId());
+        return first.dep().id() == second.gov().id()
+                && !wordIds.contains(first.gov().id())
+                && !wordIds.contains(first.dep().id())
+                && !wordIds.contains(second.dep().id());
     }
     
     /**
@@ -197,9 +197,9 @@ public class Chain {
         Dependency last = dependencies.get(dependencies.size() - 1);
         
         for (Dependency dep : dependencies) {
-            wordIds.add(dep.govId());
+            wordIds.add(dep.gov().id());
             if (dep == last) {
-                wordIds.add(dep.depId());
+                wordIds.add(dep.dep().id());
             }
         }
         
