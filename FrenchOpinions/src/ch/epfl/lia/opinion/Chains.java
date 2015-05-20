@@ -37,8 +37,7 @@ public final class Chains {
         dependencies.remove(first);
         
         /* Look for the dependencies that match the provided one,
-         * that is we have something if the form dep(a,b):::dep(b,c)
-         */
+           that is we have something if the form dep(a,b):::dep(b,c) */
         List<Dependency> chainDeps = new LinkedList<>();
         allDeps.stream().filter(second -> 
                        first.dep().equals(second.gov())

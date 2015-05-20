@@ -17,8 +17,8 @@ public class Dependency implements Serializable {
 
     public Dependency(String reln, String gov, int govId, String govPos, String dep, int depId, String depPos) {
         Preconditions.throwIfEmptyString("dependency members may not be empty", reln, gov, dep, govPos, depPos);
-        if (govId < 0 || depId < 0) {
-            throw new IllegalArgumentException("govId and depId must be positive");
+        if (govId <= 0 || depId <= 0) {
+            throw new IllegalArgumentException("govId and depId must be strictly positive");
         }
         
         this.reln = reln;

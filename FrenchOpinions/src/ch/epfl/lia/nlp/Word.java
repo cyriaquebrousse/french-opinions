@@ -14,14 +14,19 @@ public class Word implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
+    /** The string representation of the word */
     private final String value;
+    
+    /** The identifier of the word in a particular sentence */
     private final int id;
+    
+    /** The grammatical nature of the word (part-of-speech tag) */
     private final String posTag;
     
     public Word(String value, int id, String posTag) {
         Preconditions.throwIfEmptyString("word value and POS tag may not be empty", value, posTag);
-        if (id < 0) {
-            throw new IllegalArgumentException("word id must be positive");
+        if (id <= 0) {
+            throw new IllegalArgumentException("word ids must be strictly positive");
         }
         
         this.value = value;
@@ -29,14 +34,23 @@ public class Word implements Serializable {
         this.posTag = posTag;
     }
     
+    /**
+     * See {@link #value}
+     */
     public String value() {
         return value;
     }
     
+    /**
+     * See {@link #id}
+     */
     public int id() {
         return id;
     }
     
+    /**
+     * See {@link #posTag}
+     */
     public String posTag() {
         return posTag;
     }
