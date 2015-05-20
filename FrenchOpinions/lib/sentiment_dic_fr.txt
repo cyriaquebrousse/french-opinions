@@ -3217,7 +3217,7 @@ indésirable	1	0	0
 sans papiers	1	0	0
 pas rentable	1	0	0
 inégal	1	0	0
-inattendu	1	0	0
+inattendu	0	1	0
 inexpliqué	1	0	0
 infidélité	1	0	0
 défavorable	1	0	0
