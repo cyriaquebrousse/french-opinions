@@ -1,7 +1,5 @@
 package ch.epfl.lia.main;
 
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Configuration class
@@ -10,12 +8,6 @@ import java.util.List;
  */
 public final class Config {
     
-    /** Part of speech tags corresponding to nouns in French */
-    public static final List<String> POS_NOUNS_FR = Arrays.asList("N", "NC", "NPP");
-
-    /** Part of speech tags corresponding to verbs in French */
-    public static final List<String> POS_VERBS_FR = Arrays.asList("V", "VINF", "VIMP", "VPP", "VPR", "VS");
-
     /** Location of mallet-extracted topic keys (all languages) */
     public static final String MALLET_TOPIC_KEYS_LOCATION = "topics/keys.txt";
 

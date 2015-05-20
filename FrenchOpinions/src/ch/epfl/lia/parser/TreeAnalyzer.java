@@ -1,9 +1,9 @@
 package ch.epfl.lia.parser;
-import static ch.epfl.lia.main.Config.POS_NOUNS_FR;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static ch.epfl.lia.util.NLPUtils.POS_NOUNS_FR;
 import ch.epfl.lia.util.Tuple;
 import edu.stanford.nlp.trees.Tree;
 
