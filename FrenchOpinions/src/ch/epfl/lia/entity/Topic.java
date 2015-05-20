@@ -14,8 +14,9 @@ public class Topic implements Entity {
     
     private final int lineId;
     private final List<String> keys;
+    private final double proportion;
     
-    public Topic(int lineId, double polarity, List<String> keys) {
+    public Topic(int lineId, double proportion, List<String> keys) {
         Preconditions.throwIfNullOrEmpty("key list may not be null or empty", keys);
         if (lineId < 0) {
             throw new IllegalArgumentException("line id must be positive");
@@ -23,17 +24,7 @@ public class Topic implements Entity {
         
         this.lineId = lineId;
         this.keys = new LinkedList<>(keys);
-    }
-    
-    /**
-     * Copy constructor
-     * 
-     * @param topic
-     *            the topic to copy
-     */
-    public Topic(Topic topic) {
-        this.lineId = topic.lineId;
-        this.keys = new LinkedList<>(topic.keys);
+        this.proportion = proportion;
     }
     
     public int lineId() {
@@ -42,6 +33,10 @@ public class Topic implements Entity {
     
     public List<String> keys() {
         return new LinkedList<>(keys);
+    }
+    
+    public double proportion() {
+        return proportion;
     }
 
     @Override
@@ -62,7 +57,7 @@ public class Topic implements Entity {
     
     @Override
     public String toString() {
-        return "{" + lineId + "}" + keys.toString();
+        return "{" + lineId + '/' + proportion + "}" + keys.toString();
     }
 
     @Override
