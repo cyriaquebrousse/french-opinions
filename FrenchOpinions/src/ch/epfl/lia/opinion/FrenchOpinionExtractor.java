@@ -1,5 +1,10 @@
 package ch.epfl.lia.opinion;
 
+import static ch.epfl.lia.opinion.dictionary.Polarity.NEGATIVE;
+import static ch.epfl.lia.opinion.dictionary.Polarity.NEUTRAL;
+import static ch.epfl.lia.opinion.dictionary.Polarity.POSITIVE;
+import static ch.epfl.lia.util.NLPUtils.isVerb;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -7,6 +12,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import ch.epfl.lia.entity.Chain;
+import ch.epfl.lia.entity.Language;
 import ch.epfl.lia.entity.Opinion;
 import ch.epfl.lia.entity.ParsedArticle;
 import ch.epfl.lia.entity.ParsedSentence;
@@ -24,6 +30,11 @@ import ch.epfl.lia.util.Preconditions;
 public class FrenchOpinionExtractor extends OpinionExtractor {
     
     private final SentimentDictionary dictionary = FrenchSentimentDictionary.getInstance();
+
+    @Override
+    public Language getLanguage() {
+        return Language.FRENCH;
+    }
 
     @Override
     public Set<Opinion> extractOpinions(ParsedArticle article,
@@ -80,19 +91,15 @@ public class FrenchOpinionExtractor extends OpinionExtractor {
         }
         
         /* If the second word is polar */
-        final Optional<Polarity> polarityLookup = dictionary.lookup(otherWord.value());
+        final Optional<Polarity> polarityLookup = dictionary.lookup(otherWord);
         if (polarityLookup.isPresent()) {
-            final Word polarityWord = otherWord;
-            final Polarity polarity = polarityLookup.get();
+            final Word polarWord = otherWord;
+            final Polarity polarWordPolarity = polarityLookup.get();
             
-            /* Determine whether the topical word is polar as well */
-            final Optional<Polarity> topicalWordPolarityLookup = dictionary.lookup(topicWord.value());
-            if (topicalWordPolarityLookup.isPresent()) {
-                System.err.println(topicWord); //TODO
-            }
+            final Polarity globalPolarity = determineGlobalPolarity(polarWord, polarWordPolarity, topicWord);
             
             /* An opinion was found */
-            opinions.add(new Opinion(topic, topicWord, polarityWord, polarity));
+            opinions.add(new Opinion(topic, topicWord, polarWord, globalPolarity));
             
             /* Try to find and analyze chains, starting with this dependency */
             final Collection<Opinion> chainOpinions = new HashSet<>();
@@ -117,12 +124,59 @@ public class FrenchOpinionExtractor extends OpinionExtractor {
         final Word topicWord = chain.first().gov();
         final Word polarityWord = chain.last().dep();
         
-        final Optional<Polarity> lastDepPolarityLookup = dictionary.lookup(chain.last().dep().value());
+        final Optional<Polarity> lastDepPolarityLookup = dictionary.lookup(chain.last().dep());
         if (lastDepPolarityLookup.isPresent()) {
             final Polarity polarity = lastDepPolarityLookup.get();
             return Optional.of(new Opinion(topic, topicWord, polarityWord, polarity));
         } else {
             return Optional.empty();
         }
+    }
+
+    /**
+     * Determines the global polarity for the provided couple of words. It
+     * clears up inconsistencies such as a negative polarity for couples as
+     * (kill,cancer). It generally does not alter the predicted polarity for
+     * couples where there is no inconsistency, such as (bad,cancer).
+     * 
+     * @param polarWord
+     *            the polar word, i.e. the word that is not a topic key and has
+     *            a polarity
+     * @param polarWordPolarity
+     *            polarity extracted from the dictionary
+     * @param topicWord
+     *            the other word, that is a topic key
+     * @return the computed polarity for the couple (polarWord,topicWord)
+     */
+    private Polarity determineGlobalPolarity(Word polarWord, Polarity polarWordPolarity, Word topicWord) {
+        /* Check whether the topic word is also polar. If not, there is no further investigation to make */
+        Optional<Polarity> topicWordPolarityLookup = dictionary.lookup(topicWord);
+        
+        if (topicWordPolarityLookup.isPresent() && topicWordPolarityLookup.get() != NEUTRAL) {
+            
+            final Polarity topicWordPolarity = topicWordPolarityLookup.get();
+            
+            if (polarWordPolarity == NEGATIVE && isVerb(polarWord, getLanguage())) {
+                /* The polar word is a verb, and its polarity is negative */
+                System.err.println(polarWord + "-" + topicWord);
+                return topicWordPolarity == NEGATIVE ? POSITIVE : NEGATIVE;
+                
+            } else if (topicWordPolarity == NEGATIVE && isVerb(topicWord, getLanguage())) {
+                /* Same for the topic word */
+                System.err.println(polarWord + "+" + topicWord);
+                return polarWordPolarity == NEGATIVE ? POSITIVE : NEGATIVE;
+            }
+            
+            /* None of the words is a verb, but we have a +/- case: we need to
+               return negative (e.g. "rapid cancer" is +/-, but it is clearly
+               negative) */
+            if (polarWordPolarity != topicWordPolarity) {
+                System.err.println(polarWord + "*" + topicWord);
+                return NEGATIVE;
+            }
+            
+        }
+            
+        return polarWordPolarity;
     }
 }
