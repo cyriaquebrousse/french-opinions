@@ -9,11 +9,12 @@ import ch.epfl.lia.entity.Language;
 import ch.epfl.lia.entity.Opinion;
 import ch.epfl.lia.entity.ParsedArticle;
 import ch.epfl.lia.entity.Topic;
+import ch.epfl.lia.util.LanguageDependent;
 
 /**
  * @author Cyriaque Brousse
  */
-public abstract class OpinionExtractor {
+public abstract class OpinionExtractor implements LanguageDependent {
     
     private static final Map<Language, OpinionExtractor> LANG_EXTRACTOR_MAP = initLangToExtractorMap();
 

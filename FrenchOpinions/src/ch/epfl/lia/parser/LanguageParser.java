@@ -6,6 +6,7 @@ import java.util.Map;
 import ch.epfl.lia.entity.Article;
 import ch.epfl.lia.entity.Language;
 import ch.epfl.lia.entity.ParsedArticle;
+import ch.epfl.lia.util.LanguageDependent;
 
 /**
  * Grammatical parser abstraction.<br>
@@ -16,14 +17,9 @@ import ch.epfl.lia.entity.ParsedArticle;
  * 
  * @author Cyriaque Brousse
  */
-public abstract class LanguageParser {
+public abstract class LanguageParser implements LanguageDependent {
     
     private static final Map<Language, LanguageParser> LANG_PARSER_MAP = initLangToParserMap();
-    
-    /**
-     * @return the language in which this parser operates
-     */
-    public abstract Language getLanguage();
     
     /**
      * Parses the provided Article into a ParsedArticle

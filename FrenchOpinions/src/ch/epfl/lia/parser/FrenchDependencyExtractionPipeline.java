@@ -16,6 +16,7 @@ import org.maltparser.concurrent.ConcurrentMaltParserModel;
 import org.maltparser.concurrent.ConcurrentMaltParserService;
 import org.maltparser.core.exception.MaltChainedException;
 
+import ch.epfl.lia.entity.Language;
 import ch.epfl.lia.nlp.Dependency;
 import ch.epfl.lia.util.Preconditions;
 
@@ -61,6 +62,11 @@ public final class FrenchDependencyExtractionPipeline implements DependencyExtra
         return dependencies;
     }
     
+    @Override
+    public Language getLanguage() {
+        return Language.FRENCH;
+    }
+
     private List<String> getSanitizedTokens() throws IOException {
         Map<String, String> fineToCoarseGrainMap = initFineToCoarseGrainMap();
         List<String> sanitizedTokens = new ArrayList<>();

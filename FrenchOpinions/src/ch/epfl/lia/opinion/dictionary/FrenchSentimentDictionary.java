@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import ch.epfl.lia.entity.Language;
+import ch.epfl.lia.nlp.Word;
+
 /**
  * The dictionary for French, loaded from the 'lexicon_FR.txt' file. The file
  * has the following format:
@@ -70,10 +73,15 @@ public final class FrenchSentimentDictionary implements SentimentDictionary {
     }
 
     @Override
-    public Optional<Polarity> lookup(String word) {
-        final Polarity polarity = dictionary.get(word);
+    public Optional<Polarity> lookup(Word word) {
+        final Polarity polarity = dictionary.get(word.value());
         
         return polarity != null ? Optional.of(polarity) : Optional.empty();
+    }
+
+    @Override
+    public Language getLanguage() {
+        return Language.FRENCH;
     }
     
 }
