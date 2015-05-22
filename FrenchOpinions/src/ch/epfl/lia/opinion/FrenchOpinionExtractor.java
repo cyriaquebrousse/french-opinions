@@ -170,7 +170,9 @@ public class FrenchOpinionExtractor extends OpinionExtractor {
             /* None of the words is a verb, but we have a +/- case: we need to
                return negative (e.g. "rapid cancer" is +/-, but it is clearly
                negative) */
-            if (polarWordPolarity != topicWordPolarity) {
+            if (polarWordPolarity != topicWordPolarity
+                    && polarWordPolarity != NEUTRAL
+                    && topicWordPolarity != NEUTRAL) {
                 System.err.println(polarWord + "*" + topicWord);
                 return NEGATIVE;
             }
