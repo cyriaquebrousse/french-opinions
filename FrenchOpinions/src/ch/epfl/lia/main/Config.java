@@ -30,7 +30,7 @@ public final class Config {
     public static final String SHELL = "sh";
 
     /** French run script for MALLET tool */
-    public static final String MALLET_RUN_SCRIPT_LOCATION = "lib/run_mallet.sh";
+    public static final String MALLET_RUN_SCRIPT_LOCATION = "run_mallet.sh";
 
     /** Location of extracted nouns (all languages) */
     public static final String NOUNS_LOCATION = "parsed/nouns/";
