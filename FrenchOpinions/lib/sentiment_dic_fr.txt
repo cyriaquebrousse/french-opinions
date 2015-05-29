@@ -2660,7 +2660,7 @@ mal traiter	1	0	0
 maltraiter	1	0	0
 maniaque	1	0	0
 maniaco	1	0	0
-manipuler	1	0	0
+manipuler	0	1	0
 manipulation	1	0	0
 manipulatrice	1	0	0
 manipulateurs	1	0	0
@@ -3601,8 +3601,8 @@ forcer	1	0	0
 incertain	1	0	0
 enclin	1	0	0
 ane	1	0	0
-simuler	1	0	0
-simulation	1	0	0
+simuler	0	1	0
+simulation	0	1	0
 chavirer	1	0	0
 caricatural	1	0	0
 terrible	1	0	0
