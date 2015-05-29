@@ -99,7 +99,9 @@ public class FrenchOpinionExtractor extends OpinionExtractor {
             final Polarity globalPolarity = determineGlobalPolarity(polarWord, polarWordPolarity, topicWord);
             
             /* An opinion was found */
-            opinions.add(new Opinion(topic, topicWord, polarWord, globalPolarity));
+            if (!topicWord.equals(polarWord)) {
+                opinions.add(new Opinion(topic, topicWord, polarWord, globalPolarity));
+            }
             
             /* Try to find and analyze chains, starting with this dependency */
             final Collection<Opinion> chainOpinions = new HashSet<>();
@@ -122,12 +124,16 @@ public class FrenchOpinionExtractor extends OpinionExtractor {
     private Optional<Opinion> analyzeChain(Chain chain, Topic topic) {
         /* Consider the whole chain as a single dependency */
         final Word topicWord = chain.first().gov();
-        final Word polarityWord = chain.last().dep();
+        final Word polarWord = chain.last().dep();
+        
+        if (topicWord.equals(polarWord)) {
+            return Optional.empty();
+        }
         
         final Optional<Polarity> lastDepPolarityLookup = dictionary.lookup(chain.last().dep());
         if (lastDepPolarityLookup.isPresent()) {
             final Polarity polarity = lastDepPolarityLookup.get();
-            return Optional.of(new Opinion(topic, topicWord, polarityWord, polarity));
+            return Optional.of(new Opinion(topic, topicWord, polarWord, polarity));
         } else {
             return Optional.empty();
         }
