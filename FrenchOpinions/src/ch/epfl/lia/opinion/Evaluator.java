@@ -210,6 +210,16 @@ public final class Evaluator {
         }
         
         /**
+         * @param article
+         * @return the number of opinions registered for this article
+         */
+        public int opinionCount(Article article) {
+            Preconditions.throwIfNull("article was null", article);
+            
+            return map.get(article).size();
+        }
+        
+        /**
          * @return the built evaluator
          */
         public Evaluator build() {
