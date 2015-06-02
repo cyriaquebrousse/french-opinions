@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import ch.epfl.lia.entity.Chain;
+import ch.epfl.lia.nlp.Chain;
 import ch.epfl.lia.nlp.Dependency;
 
 /**

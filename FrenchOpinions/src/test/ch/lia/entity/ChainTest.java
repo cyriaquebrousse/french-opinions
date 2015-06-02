@@ -5,7 +5,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import ch.epfl.lia.entity.Chain;
+import ch.epfl.lia.nlp.Chain;
 import ch.epfl.lia.nlp.Dependency;
 
 /**

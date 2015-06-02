@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import ch.epfl.lia.entity.Chain;
 import ch.epfl.lia.entity.Language;
 import ch.epfl.lia.entity.Opinion;
 import ch.epfl.lia.entity.ParsedArticle;
 import ch.epfl.lia.entity.ParsedSentence;
 import ch.epfl.lia.entity.Topic;
+import ch.epfl.lia.nlp.Chain;
 import ch.epfl.lia.nlp.Dependency;
 import ch.epfl.lia.nlp.Word;
 import ch.epfl.lia.opinion.dictionary.FrenchSentimentDictionary;
