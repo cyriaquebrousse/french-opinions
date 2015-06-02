@@ -78,6 +78,19 @@ public final class FrenchSentimentDictionary implements SentimentDictionary {
         
         return polarity != null ? Optional.of(polarity) : Optional.empty();
     }
+    
+    @Override
+    public Optional<Polarity> stemAndlookup(Word word) {
+        final FrenchStemmer stemmer = FrenchStemmer.getInstance();
+        final Optional<String> stemmedValue = stemmer.stem(word);
+        
+        if (stemmedValue.isPresent()) {
+            final Word stemmed = new Word(stemmedValue.get(), word.id(), word.posTag());
+            return lookup(stemmed);
+        } else {
+            return lookup(word);
+        }
+    }
 
     @Override
     public Language getLanguage() {

@@ -17,8 +17,17 @@ public interface SentimentDictionary extends Serializable, LanguageDependent {
     /**
      * @param word
      *            the word whose polarity is being looked up
-     * @return the polarity, if the word was found in the dictionary
+     * @return the polarity, if the word was found in the dictionary (as is,
+     *         i.e. no stemming will be performed)
      */
     Optional<Polarity> lookup(Word word);
+    
+    /**
+     * @param word
+     *            the word whose polarity is being looked up
+     * @return the polarity, if the word was found in the dictionary (as is, or
+     *         a stemmed version of it)
+     */
+    Optional<Polarity> stemAndlookup(Word word);
     
 }
