@@ -10,6 +10,7 @@ import edu.stanford.nlp.trees.Tree;
 /**
  * @author Cyriaque Brousse
  */
+@Deprecated
 public class TreeAnalyzer {
     
     private final Tree tree;
