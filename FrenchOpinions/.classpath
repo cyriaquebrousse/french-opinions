@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="jar/liblinear-1.8.jar"/>
 	<classpathentry kind="lib" path="jar/libsvm.jar"/>
 	<classpathentry kind="lib" path="jar/log4j.jar"/>
+	<classpathentry kind="lib" path="jar/libstemmer.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
