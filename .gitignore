@@ -28,5 +28,6 @@ mallet/
 raw/
 parsed/
 topics/
+results/
 jar/
 !jar/jars_to_copy
