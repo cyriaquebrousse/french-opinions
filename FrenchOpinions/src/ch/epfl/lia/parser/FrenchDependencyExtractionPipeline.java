@@ -211,7 +211,6 @@ public final class FrenchDependencyExtractionPipeline implements DependencyExtra
                 
                 /* Skip residual junk tokens */
                 if (govPos == null || depPos == null) {
-                    System.err.println("gros caca pourri");
                     continue;
                 }
             }
