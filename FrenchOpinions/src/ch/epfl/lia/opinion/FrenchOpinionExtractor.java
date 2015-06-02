@@ -91,7 +91,7 @@ public class FrenchOpinionExtractor extends OpinionExtractor {
         }
         
         /* If the second word is polar */
-        final Optional<Polarity> polarityLookup = dictionary.lookup(otherWord);
+        final Optional<Polarity> polarityLookup = dictionary.stemAndlookup(otherWord);
         if (polarityLookup.isPresent()) {
             final Word polarWord = otherWord;
             final Polarity polarWordPolarity = polarityLookup.get();
@@ -130,7 +130,7 @@ public class FrenchOpinionExtractor extends OpinionExtractor {
             return Optional.empty();
         }
         
-        final Optional<Polarity> lastDepPolarityLookup = dictionary.lookup(chain.last().dep());
+        final Optional<Polarity> lastDepPolarityLookup = dictionary.stemAndlookup(chain.last().dep());
         if (lastDepPolarityLookup.isPresent()) {
             final Polarity polarity = lastDepPolarityLookup.get();
             return Optional.of(new Opinion(topic, topicWord, polarWord, polarity));
@@ -156,7 +156,7 @@ public class FrenchOpinionExtractor extends OpinionExtractor {
      */
     private Polarity determineGlobalPolarity(Word polarWord, Polarity polarWordPolarity, Word topicWord) {
         /* Check whether the topic word is also polar. If not, there is no further investigation to make */
-        Optional<Polarity> topicWordPolarityLookup = dictionary.lookup(topicWord);
+        Optional<Polarity> topicWordPolarityLookup = dictionary.stemAndlookup(topicWord);
         
         if (topicWordPolarityLookup.isPresent() && topicWordPolarityLookup.get() != NEUTRAL) {
             

@@ -86,10 +86,14 @@ public final class FrenchSentimentDictionary implements SentimentDictionary {
         
         if (stemmedValue.isPresent()) {
             final Word stemmed = new Word(stemmedValue.get(), word.id(), word.posTag());
-            return lookup(stemmed);
-        } else {
-            return lookup(word);
+            final Optional<Polarity> stemLookup = lookup(stemmed);
+            
+            if (stemLookup.isPresent()) {
+                return stemLookup;
+            }
         }
+
+        return lookup(word);
     }
 
     @Override
