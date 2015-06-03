@@ -10,9 +10,9 @@ import ch.epfl.lia.nlp.Word;
 /**
  * @author Cyriaque Brousse
  */
-public final class FrenchConllWriter {
+public final class ConllWriter {
     
-    private FrenchConllWriter() { }
+    private ConllWriter() { }
     
     public static void writeWordsAsConll(List<Word> words, String path) throws IOException {
         List<String> adaptedTokens = new ArrayList<>();

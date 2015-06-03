@@ -47,7 +47,7 @@ public class FrenchParser extends LanguageParser {
         try {
             for (List<HasWord> sentence : new DocumentPreprocessor(rawFileLocation)) {
                 List<Word> words = tagWords(TAGGER, sentence);
-                FrenchConllWriter.writeWordsAsConll(words, conllOutputLocation);
+                ConllWriter.writeWordsAsConll(words, conllOutputLocation);
                 
                 final ParsingAnalyzer analyzer = new ParsingAnalyzer(words);
                 
