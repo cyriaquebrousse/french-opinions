@@ -29,10 +29,10 @@ import ch.epfl.lia.util.Preconditions;
  */
 public final class FrenchDependencyExtractionPipeline implements DependencyExtractor {
     
-    private final TreeAnalyzer analyzer;
+    private final ParsingAnalyzer analyzer;
     private final String conllInputFile;
     
-    public FrenchDependencyExtractionPipeline(String conllInputFilePath, TreeAnalyzer analyzer) {
+    public FrenchDependencyExtractionPipeline(String conllInputFilePath, ParsingAnalyzer analyzer) {
         Preconditions.throwIfEmptyString("cannot open null path", conllInputFilePath);
         Preconditions.throwIfNull("cannot construct pipeline with null analyzer", analyzer);
         
@@ -73,7 +73,7 @@ public final class FrenchDependencyExtractionPipeline implements DependencyExtra
         
         foreachNonEmptyLine(conllInputFile, line -> {
             /* Match line against sanitizing pattern */
-            line = line.replaceFirst("^((\\d+)\t(\\S+)\t_\t(\\S+)\t(\\S+)\t_).+", "$1");
+            line = line.replaceFirst("^((\\d+)\t(\\S+)\t_\t(\\S+)\t(\\S+)\t_).*", "$1");
             
             int i = 0;
             for (String fineGrainPOS : fineToCoarseGrainMap.keySet()) {
@@ -178,7 +178,7 @@ public final class FrenchDependencyExtractionPipeline implements DependencyExtra
         
         List<Dependency> dependencies = new ArrayList<>();
         
-        Pattern pattern = Pattern.compile("^(\\d+)\t(\\S+)\t_\t(\\S+)\t(\\S+)\t_\t(\\d+)\t(\\S+)\t.+");
+        Pattern pattern = Pattern.compile("^(\\d+)\t(\\S+)\t_\t(\\S+)\t(\\S+)\t_\t(\\d+)\t(\\S+)\t.*");
         for (String line : parsedTokens) {
             line = line.trim();
             if (line.isEmpty()) {
@@ -199,22 +199,21 @@ public final class FrenchDependencyExtractionPipeline implements DependencyExtra
             if (reln.equals("ponct") || reln.equals("root")) {
                 continue;
             } else {
-                gov = analyzer.leaves().get(govId - 1).value();
+                gov = analyzer.words().get(govId - 1).value();
                 
                 /* Skip junk tokens, as defined in the configuration */
                 if (!gov.matches(NOT_JUNK_DEP_REGEXP) || !dep.matches(NOT_JUNK_DEP_REGEXP)) {
                     continue;
                 }
                 
-                govPos = analyzer.posTagOfWord(gov, govId - 1);
-                depPos = analyzer.posTagOfWord(dep, depId - 1);
+                govPos = analyzer.words().get(govId - 1).posTag();
+                depPos = analyzer.words().get(depId - 1).posTag();
                 
                 /* Skip residual junk tokens */
                 if (govPos == null || depPos == null) {
                     continue;
                 }
             }
-            
             
             dependencies.add(new Dependency(reln, gov, govId, govPos, dep, depId, depPos));
         }

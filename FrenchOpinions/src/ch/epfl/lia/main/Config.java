@@ -26,6 +26,9 @@ public final class Config {
     /** Location of the Stanford parser for French */
     public static final String STANFORD_PARSER_LOCATION_FR = "edu/stanford/nlp/models/lexparser/frenchFactored.ser.gz";
 
+    /** Location of the Stanford tagger for French */
+    public static final String STANFORD_TAGGER_LOCATION_FR = "lib/tagger-libs/models/french.tagger";
+
     /** Type of shell to be used when running shell scripts */
     public static final String SHELL = "sh";
 

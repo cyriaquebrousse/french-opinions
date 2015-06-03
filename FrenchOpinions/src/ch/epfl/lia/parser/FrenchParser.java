@@ -2,11 +2,8 @@ package ch.epfl.lia.parser;
 
 import static ch.epfl.lia.main.Config.PARSED_CONLL_FILES_LOCATION;
 import static ch.epfl.lia.main.Config.RAW_ARTICLES_LOCATION;
-import static ch.epfl.lia.main.Config.STANFORD_PARSER_LOCATION_FR;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,16 +11,14 @@ import ch.epfl.lia.entity.Article;
 import ch.epfl.lia.entity.Language;
 import ch.epfl.lia.entity.ParsedArticle;
 import ch.epfl.lia.entity.ParsedSentence;
+import ch.epfl.lia.main.Config;
 import ch.epfl.lia.nlp.Dependency;
+import ch.epfl.lia.nlp.Word;
 import ch.epfl.lia.util.Preconditions;
-import ch.epfl.lia.util.Tuple;
 import edu.stanford.nlp.ling.HasWord;
-import edu.stanford.nlp.parser.lexparser.LexicalizedParser;
+import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.process.DocumentPreprocessor;
-import edu.stanford.nlp.trees.Tree;
-import edu.stanford.nlp.trees.TreePrint;
-import edu.stanford.nlp.trees.TreebankLanguagePack;
-import edu.stanford.nlp.trees.international.french.FrenchTreebankLanguagePack;
+import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 /**
  * @see LanguageParser
@@ -31,7 +26,7 @@ import edu.stanford.nlp.trees.international.french.FrenchTreebankLanguagePack;
  */
 public class FrenchParser extends LanguageParser {
     
-    private static final LexicalizedParser PARSER = LexicalizedParser.loadModel(STANFORD_PARSER_LOCATION_FR);
+    private static final MaxentTagger TAGGER = new MaxentTagger(Config.STANFORD_TAGGER_LOCATION_FR);
 
     @Override
     public Language getLanguage() {
@@ -51,11 +46,10 @@ public class FrenchParser extends LanguageParser {
         
         try {
             for (List<HasWord> sentence : new DocumentPreprocessor(rawFileLocation)) {
-                final Tree tree = PARSER.parse(sentence);
-                final TreeAnalyzer analyzer = new TreeAnalyzer(tree);
+                List<Word> words = tagWords(TAGGER, sentence);
+                FrenchConllWriter.writeWordsAsConll(words, conllOutputLocation);
                 
-                printTree(tree, 0);
-                saveConll(conllOutputLocation, tree);
+                final ParsingAnalyzer analyzer = new ParsingAnalyzer(words);
                 
                 /* Dependencies extraction */
                 FrenchDependencyExtractionPipeline pipeline = new FrenchDependencyExtractionPipeline(
@@ -63,11 +57,10 @@ public class FrenchParser extends LanguageParser {
                 List<Dependency> dependencies = pipeline.extract();
                 
                 /* Part of speech tags and nouns extraction */
-                List<Tuple<String, String>> wordsAndTags = analyzer.wordsAndTags();
                 nouns.addAll(analyzer.nounsAsStrings());
                 
                 /* Saving the extracted features */
-                parsedSentences.add(new ParsedSentence(wordsAndTags, dependencies, tree));
+                parsedSentences.add(new ParsedSentence(words, dependencies));
             }
             
         } catch (IOException | DependencyExtractionException e) {
@@ -78,29 +71,24 @@ public class FrenchParser extends LanguageParser {
     }
     
     /**
-     * Saves the tree in CoNLL-2007 format to disk
+     * @param tagger
+     *            the tagger to use
+     * @param sentence
+     *            the sentence to tag
+     * @return the list of words extracted from the sentence
+     * @see Word
      */
-    private void saveConll(String path, Tree tree) throws FileNotFoundException {
-        PrintWriter writer = new PrintWriter(path);
+    private List<Word> tagWords(MaxentTagger tagger, List<HasWord> sentence) {
+        List<TaggedWord> taggedWords = tagger.tagSentence(sentence);
+        List<Word> words = new ArrayList<>();
         
-        TreebankLanguagePack langPack = new FrenchTreebankLanguagePack();
-        TreePrint treePrint = new TreePrint("conll2007", langPack);
-        treePrint.printTree(tree, writer);
-        
-        writer.close();
-    }
-    
-    private void printTree(Tree tree, int level) {
-        String indent = "";
-        for (int i = 0; i <= level; i++) {
-            indent += "  ";
+        int id = 1;
+        for (TaggedWord w : taggedWords) {
+            words.add(new Word(w.value(), id, w.tag()));
+            id++;
         }
         
-        System.out.println(tree.label());
-        for (Tree ch : tree.children()) {
-            System.out.print(indent);
-            printTree(ch, level + 1);
-        }
+        return words;
     }
 
 }

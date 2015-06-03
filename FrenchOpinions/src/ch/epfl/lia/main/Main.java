@@ -48,12 +48,12 @@ public class Main {
         }
 
         for (Article article : articles) {
+            System.err.println("Parsing " + article.id());
             article.parse(parser);
             article.saveToDisk(serialPathPrefix + article.id() + ".ser");
         }
             
         Collection<Topic> topics = TopicManager.extractTopics(articles);
-        getMostProminentTopicsForArticles(topics);
         
         OpinionExtractor extractor = OpinionExtractor.getForLanguage(LANGUAGE);
         Evaluator.Builder evalBuilder = new Evaluator.Builder();
@@ -70,6 +70,12 @@ public class Main {
             
             final int score = opinions.stream().mapToInt(o -> o.polarity().score()).sum();
             System.out.println("Score:\t" + score);
+            
+            final int numberExtractedOpinions = evalBuilder.opinionCount(article);
+            System.out.println("Extracted opinions:\t" + numberExtractedOpinions);
+            
+//            System.out.println("--- Assessment of opinions ---");
+//            Assessment.assessOpinions(opinions, "results/expected_polarities.txt");
         }
         
         /* Statistics */
