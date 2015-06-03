@@ -82,6 +82,18 @@ autonome	0	0	1
 disponible	0	0	1
 prix	0	0	1
 impressionné	0	0	1
+indispensable	0	0	1
+immersion	0	0	1
+immersif	0	0	1
+lassant	1	0	0
+novateur	0	0	1
+surprenant	0	0	1
+glauque	1	0	0
+basique	1	0	0
+soigner	0	0	1
+attrayant	0	0	1
+baveux	1	0	0
+pesant	1	0	0
 génial	0	0	1
 émerveillé	0	0	1
 équilibré	0	0	1
@@ -116,7 +128,13 @@ renforcer	0	0	1
 essor	0	0	1
 plein essor	0	0	1
 généreux	0	0	1
-neuf	0	0	1
+neuf	0	1	0
+savoureux	0	0	1
+plat	1	0	0
+agaçant	1	0	0
+injouable	1	0	0
+bourrin	1	0	0
+visible	0	0	1
 bravo	0	0	1
 essoufflement	0	0	1
 couper le souffle	0	0	1
@@ -262,6 +280,7 @@ assouplir	0	0	1
 plus facile	0	0	1
 facilité	0	0	1
 facile	0	0	1
+aisé	0	0	1
 facile à utiliser	0	0	1
 exubérance	0	0	1
 exubérant	0	0	1
@@ -352,7 +371,6 @@ triomphal	0	0	1
 fabuleux	0	0	1
 fabuleusement	0	0	1
 juste	0	0	1
-assez	0	0	1
 foi	0	0	1
 fidèle	0	0	1
 fidèlement	0	0	1
@@ -395,12 +413,21 @@ impeccable	0	0	1
 parfaitement	0	0	1
 souplesse	0	0	1
 souple	0	0	1
+loyal	0	0	1
+bancal	1	0	0
+fourbe	1	0	0
+inventif	0	0	1
+coriace	0	0	1
+incisif	0	0	1
+hasardeux	1	0	0
 épanouir	0	0	1
 florissant	0	0	1
 penchant	0	0	1
 infaillible	0	0	1
 prévoyance	0	0	1
 formidable	0	0	1
+nécessaire	0	0	1
+artistique	0	0	1
 force	0	0	1
 chance	0	0	1
 heureusement	0	0	1
@@ -451,6 +478,8 @@ glorieusement	0	0	1
 gloire	0	0	1
 rougeoyant	0	0	1
 bon	0	0	1
+bonus	0	0	1
+malus	1	0	0
 beau	0	0	1
 bonté	0	0	1
 grâce	0	0	1
@@ -533,7 +562,7 @@ impressionnant	0	0	1
 améliorer	0	0	1
 amélioré	0	0	1
 incroyable	0	0	1
-incroyablement	0	0	1
+incroyablement	0	1	0
 indulgence	0	0	1
 indulgent	0	0	1
 peu coûteux	0	0	1
@@ -808,6 +837,9 @@ juste titre	0	0	1
 justesse	0	0	1
 sans risque	0	0	1
 sûr	0	0	1
+sûrs	0	0	1
+sûre	0	0	1
+sûres	0	0	1
 robuste	0	0	1
 rock star	0	0	1
 rockstar	0	0	1
@@ -923,7 +955,6 @@ tolérable	0	0	1
 tolérance	0	0	1
 haut de gamme	0	0	1
 haut niveau	0	0	1
-dur	1	0	0
 plus simple	0	0	1
 tranquillité	0	0	1
 trésor	0	0	1
@@ -1367,7 +1398,7 @@ timide	1	0	0
 dénigrer	1	0	0
 bâtard	1	0	0
 battu	1	0	0
-coup	1	0	0
+coup	0	1	0
 coup de coeur	0	0	1
 coup de foudre	1	0	0
 toqué	1	0	0
@@ -1515,6 +1546,7 @@ imprudent	1	0	0
 imprudence	1	0	0
 gamin	1	0	0
 moche	1	0	0
+moches	1	0	0
 bravade	1	0	0
 effronté	1	0	0
 violation	1	0	0
@@ -1803,8 +1835,8 @@ lambin	1	0	0
 louche	1	0	0
 chelou	1	0	0
 relou	1	0	0
-délirant	1	0	0
-délire	1	0	0
+délirant	0	0	1
+délire	0	0	1
 illusion	1	0	0
 inondation	1	0	0
 délires	1	0	0
@@ -2362,6 +2394,9 @@ mal conçu	1	0	0
 mal défini	1	0	0
 mal fait	1	0	0
 laid	1	0	0
+laide	1	0	0
+laids	1	0	0
+laides	1	0	0
 mal formé	1	0	0
 mal éduqué	1	0	0
 méchant	1	0	0
@@ -3341,6 +3376,7 @@ mal situé	1	0	0
 payant	1	0	0
 malpoli	1	0	0
 pas drôle	1	0	0
+drôle	0	0	1
 fainéant	1	0	0
 brouillon	1	0	0
 pas clair	1	0	0
@@ -3366,6 +3402,15 @@ plus moche	1	0	0
 aucun intéret	1	0	0
 sans intéret	1	0	0
 inexistant	1	0	0
+sanguinaire	1	0	0
+probant	0	0	1
+vivant	0	0	1
+fonctionnel	0	0	1
+pertinent	0	0	1
+oppressant	1	0	0
+compliquer	1	0	0
+approximatif	1	0	0
+saccader	1	0	0
 mal pensé	1	0	0
 arriver pas	1	0	0
 parviens pas	1	0	0
@@ -3560,7 +3605,6 @@ diligent	0	0	1
 distinction	0	0	1
 distinguer	0	0	1
 profiter	0	0	1
-mode	0	0	1
 tendance	0	0	1
 volontiers	0	0	1
 humain	0	0	1
@@ -3601,8 +3645,8 @@ forcer	1	0	0
 incertain	1	0	0
 enclin	1	0	0
 ane	1	0	0
-simuler	0	1	0
-simulation	0	1	0
+simuler	0	0	1
+simulation	0	0	1
 chavirer	1	0	0
 caricatural	1	0	0
 terrible	1	0	0
@@ -3817,8 +3861,6 @@ craindre	1	0	0
 génant	1	0	0
 irraisonnable	1	0	0
 rien	1	0	0
-ni	1	0	0
-seul	1	0	0
 cul	1	0	0
 mauvaise gestion	1	0	0
 tomber	1	0	0
@@ -3889,6 +3931,8 @@ bonne performance	0	0	1
 belle performance	0	0	1
 rend unique	0	0	1
 rendent unique	0	0	1
+unique	0	0	1
+fun	0	0	1
 whaou	0	0	1
 regretter en rien	0	0	1
 très content	0	0	1
@@ -3912,7 +3956,6 @@ facilité d'utilisation	0	0	1
 parmi les meilleurs	0	0	1
 adhérer	0	0	1
 adhérent	0	0	1
-doté	0	0	1
 rien à dire	0	0	1
 aucun défaut	0	0	1
 must	0	0	1
