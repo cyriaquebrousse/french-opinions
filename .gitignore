@@ -29,5 +29,8 @@ raw/
 parsed/
 topics/
 results/
+
+**/tagger-libs/
+
 jar/
 !jar/jars_to_copy
