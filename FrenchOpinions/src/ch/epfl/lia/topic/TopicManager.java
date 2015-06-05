@@ -46,7 +46,7 @@ public final class TopicManager {
         Preconditions.throwIfNullOrEmpty("article list was empty", articles);
         final Language language = articles.get(0).language();
         if (!articles.stream().allMatch(a -> a.language() == language)) {
-            throw new IllegalArgumentException("Cannot extract topics on articles of different languages");
+            throw new TopicExtractionException("Cannot extract topics on articles of different languages");
         }
         
         /* Remove old nouns before proceeding */
