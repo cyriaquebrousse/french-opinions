@@ -199,6 +199,12 @@ public final class FrenchDependencyExtractionPipeline implements DependencyExtra
             if (reln.equals("ponct") || reln.equals("root")) {
                 continue;
             } else {
+                
+                /* Ignore the (very unfrequent) parsing nonsenses */
+                if (reln.equals("missinghead") || govId < 1 || depId < 1) {
+                    continue;
+                }
+                
                 gov = analyzer.words().get(govId - 1).value();
                 
                 /* Skip junk tokens, as defined in the configuration */
