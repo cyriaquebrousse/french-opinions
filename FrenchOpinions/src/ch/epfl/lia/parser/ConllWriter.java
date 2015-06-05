@@ -14,6 +14,19 @@ public final class ConllWriter {
     
     private ConllWriter() { }
     
+    /**
+     * Saves the provided list of words to the specified file in a variant of
+     * the CoNLL 2007 format, specified as follows:<br>
+     * {@code ID WORDSTRING _ POSTAG POSTAG _}<br>
+     * The values are tab-separated.
+     * 
+     * @param words
+     *            list of words to save as CoNLL-2007
+     * @param path
+     *            the file to save to
+     * @throws IOException
+     *             if the I/O operations on the specified path returned an error
+     */
     public static void writeWordsAsConll(List<Word> words, String path) throws IOException {
         List<String> adaptedTokens = new ArrayList<>();
         words.stream().forEach(w -> {
