@@ -61,6 +61,10 @@ public final class Evaluator {
         
         return opsetMap.get(article).size();
     }
+    
+    public int totalOpinionCount() {
+        return opsetMap.keySet().stream().mapToInt(a -> opsetMap.get(a).size()).sum();
+    }
 
     /**
      * @return the article with the lowest score, or {@code null} if no opinions
@@ -159,6 +163,9 @@ public final class Evaluator {
         // Average number of extracted opinions
         final double avg = averageOpinionCount();
         builder.append("Average number of extracted opinions:\t" + avg + "\n");
+        
+        // Total number of extracted opinions
+        builder.append("Total number of extracted opinions\t" + totalOpinionCount() + "\n");
         
         return builder.toString();
     }
