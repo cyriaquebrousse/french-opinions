@@ -3754,7 +3754,6 @@ sans saveur	1	0	0
 sans couleur	1	0	0
 atone	1	0	0
 destructrice	1	0	0
-censé	1	0	0
 trop compliqué	1	0	0
 gagne petit	1	0	0
 malfrat	1	0	0
