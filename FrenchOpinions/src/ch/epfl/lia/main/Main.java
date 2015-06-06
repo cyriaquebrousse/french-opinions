@@ -73,9 +73,6 @@ public class Main {
             
             final int numberExtractedOpinions = evalBuilder.opinionCount(article);
             System.out.println("Extracted opinions:\t" + numberExtractedOpinions);
-            
-//            System.out.println("--- Assessment of opinions ---");
-//            Assessment.assessOpinions(opinions, "results/expected_polarities.txt");
         }
         
         /* Statistics */
